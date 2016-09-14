@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Dropzone from 'react-dropzone';
 import { Link } from 'react-router';
 import filesize from 'filesize';
 import styles from './index.css';
@@ -17,9 +18,20 @@ class Finder extends Component {
   }
 
   render() {
-    // const { increment, incrementIfOdd, incrementAsync, decrement, counter } = this.props;
-    const {loadDetail, showDetail, finder} = this.props;
+    const {uploadObject, loadDetail, showDetail, finder} = this.props;
     const {containers, container, object} = finder;
+
+    const handleDrop = (container, files) => {
+      uploadObject(container, {
+        name: files[0].name,
+        path: files[0].path
+      });
+    };
+
+    const handleClick = e => {
+      console.log(e);
+      return
+    }
 
     const containerListPane = (() => {
       if (!containers.list) {
@@ -59,7 +71,7 @@ class Finder extends Component {
     })();
 
     const objectItemPane = (() => {
-      if (!object || !object.item) {
+      if (!object || !object.current) {
         return;
       }
 
@@ -89,11 +101,14 @@ class Finder extends Component {
     })();
 
     return (
-      <div className={styles.box}>
+      <Dropzone
+        disableClick={true}
+        onDrop={handleDrop.bind(null, container)}
+        className={styles.box}>
         {containerListPane}
         {containerItemPane}
         {objectItemPane}
-      </div>
+      </Dropzone>
     );
   }
 }

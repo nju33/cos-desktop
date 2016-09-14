@@ -64,3 +64,12 @@
 .item:hover {
   background: #ccc;
 }
+
+.itemActive {
+  background: #3A8FB7;
+  color: #fff;
+}
+
+.itemActive:hover {
+  background: #3A8FB7;
+}

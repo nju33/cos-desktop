@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
 import { Link } from 'react-router';
+import _ from 'lodash';
+import classnames from 'classnames';
 import filesize from 'filesize';
 import styles from './index.css';
 
@@ -38,13 +40,17 @@ class Finder extends Component {
         return;
       }
 
+      const currentName = _.get(container, 'current.name');
+
       return (
         <section className={styles.pane}>
           <h1 className={styles.headline}>Containers</h1>
           <ul>
             {containers.list.map(item => (
               <li
-                className={styles.item}
+                className={classnames(styles.item, {
+                  [styles.itemActive]: currentName === item.name
+                })}
                 onClick={loadDetail.bind(null, item)}>{item.name}</li>
             ))}
           </ul>
@@ -57,12 +63,16 @@ class Finder extends Component {
         return;
       }
 
+      const currentName = _.get(object, 'current.name');
+
       return (
         <section className={styles.pane}>
           <ul>
             {container.list.map(item => (
               <li
-                className={styles.item}
+                className={classnames(styles.item, {
+                  [styles.itemActive]: currentName === item.name
+                })}
                 onClick={showDetail.bind(null, container.current.name, item)}>{item.name}</li>
             ))}
           </ul>

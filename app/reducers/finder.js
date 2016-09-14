@@ -1,12 +1,16 @@
 export default function finder(state = {}, action) {
   switch (action.type) {
     case 'LOAD_ROOT': {
-      return Object.assign({}, state, {containers: action.data});
+      return Object.assign({}, state, {
+        containers: action.data,
+        object: {}
+      });
     }
 
     case 'LOAD_DETAIL': {
       return Object.assign({}, state, {
-        container: action.data
+        container: action.data,
+        object: {}
       });
     }
 

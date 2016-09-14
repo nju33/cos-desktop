@@ -40,7 +40,8 @@ class Finder extends Component {
         return;
       }
 
-      const currentName = _.get(container, 'current.name');
+      const currentContainerName = _.get(container, 'current.name');
+      const currentObjectName = _.get(object, 'current.name')
 
       return (
         <section className={styles.pane}>
@@ -49,7 +50,14 @@ class Finder extends Component {
             {containers.list.map(item => (
               <li
                 className={classnames(styles.item, {
-                  [styles.itemActive]: currentName === item.name
+                  [styles.itemActive]: (() => {
+                    return currentContainerName === item.name &&
+                           !currentObjectName
+                  })(),
+                  [styles.itemActiveParent]: (() => {
+                    return currentContainerName === item.name &&
+                           currentObjectName
+                  })()
                 })}
                 onClick={loadDetail.bind(null, item)}>{item.name}</li>
             ))}

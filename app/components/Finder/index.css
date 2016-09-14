@@ -62,7 +62,7 @@
 }
 
 .item:hover {
-  background: #ccc;
+  background: #f3f3f3;
 }
 
 .itemActive {
@@ -72,4 +72,12 @@
 
 .itemActive:hover {
   background: #3A8FB7;
+}
+
+.itemActiveParent {
+  background: #e1e1e1;
+}
+
+.itemActiveParent:hover {
+  background: #e1e1e1;
 }

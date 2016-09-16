@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Dropzone from 'react-dropzone';
+import ContextMenu from '../ContextMenu';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import classnames from 'classnames';
@@ -81,7 +82,8 @@ class Finder extends Component {
                 className={classnames(styles.item, {
                   [styles.itemActive]: currentName === item.name
                 })}
-                onClick={showDetail.bind(null, container.current.name, item)}>{item.name}</li>
+                onClick={showDetail.bind(null, container.current.name, item)}
+                onContextMenu={this.contextMenu.bind(this, {container: container.current, object: item, currentObject: object.current})}>{item.name}</li>
             ))}
           </ul>
         </section>
@@ -128,6 +130,22 @@ class Finder extends Component {
         {objectItemPane}
       </Dropzone>
     );
+  }
+        // <ContextMenu></ContextMenu>
+
+  contextMenu(data, e) {
+    e.preventDefault();
+    const {deleteObject} = this.props;
+    const {container, object, currentObject} = data;
+    const {Menu, MenuItem} = require('electron').remote;
+    const menu = new Menu();
+    menu.append(new MenuItem({
+      label: `Delete ${object.name}`,
+      click() {
+        deleteObject(container, object, currentObject);
+      }
+    }));
+    menu.popup(e.clientX, e.clientY);
   }
 }
 

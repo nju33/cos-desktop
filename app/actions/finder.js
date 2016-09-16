@@ -27,6 +27,18 @@ export function uploadObject(container, file) {
   }
 }
 
+export function deleteObject(container, file, currentFile) {
+  return async dispatch => {
+    const _container = conoha.os.container(container.name);
+    await _container.object(file.name).delete();
+    const data = await _container.get();
+    handleLoadDetail(dispatch, container);
+    if (!_.isNil(currentFile)) {
+      handleShowDetail(dispatch, container.name, currentFile);
+    }
+  }
+}
+
 export function loadRoot() {
   return dispatch => {
     conoha.identity.token.get().then(() => {
